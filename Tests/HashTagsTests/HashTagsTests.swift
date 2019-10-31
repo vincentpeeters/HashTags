@@ -48,6 +48,10 @@ final class HashTagsTests: XCTestCase {
         XCTAssertTrue(tree.root.children.contains { $0.hashTag == HashTag("Programming/languages") })
         
     }
+    
+    func testHashTagDictionary() {
+        
+    }
 
     static var allTests = [
         ("treeContainsAddedTags", treeContainsAddedTags),
