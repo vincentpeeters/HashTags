@@ -20,6 +20,10 @@ public struct HashTag {
         HashTag("\(self.path)/\(pathComponent)")
     }
     
+    var lastComponent: String {
+        components.last ?? ""
+    }
+    
     
     //MARK: - Internal Methods and computed vars
     
