@@ -8,7 +8,7 @@
 import Foundation
 
 
-extension HashTag {
+public extension HashTag {
     
     func carrierDictionary(from carriers: [HashTagCarrier]) -> [HashTag: [HashTagCarrier]] {
         let sequence: [(hashtag: HashTag, carrier: HashTagCarrier)] = Array(
