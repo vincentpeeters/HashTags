@@ -20,7 +20,7 @@ public struct HashTag {
         HashTag("\(self.path)/\(pathComponent)")
     }
     
-    var lastComponent: String {
+    public var lastComponent: String {
         components.last ?? ""
     }
     
