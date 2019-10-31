@@ -11,7 +11,7 @@ public extension HashTag {
     
     class Tree {
         
-        let root: Node = Node(hashTag: .empty)
+        public let root: Node = Node(hashTag: .empty)
         
         public init(from hashTags: Set<HashTag> ) {
             for hashTag in hashTags {
