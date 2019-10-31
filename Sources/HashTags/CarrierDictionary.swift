@@ -10,7 +10,7 @@ import Foundation
 
 public extension HashTag {
     
-    func carrierDictionary(from carriers: [HashTagCarrier]) -> [HashTag: [HashTagCarrier]] {
+    static func carrierDictionary(from carriers: [HashTagCarrier]) -> [HashTag: [HashTagCarrier]] {
         let sequence: [(hashtag: HashTag, carrier: HashTagCarrier)] = Array(
             carriers.map { carrier in carrier.hashTags.map { hashtag in (hashtag, carrier) } }.joined())
         return Dictionary(grouping: sequence) { $0.hashtag }
