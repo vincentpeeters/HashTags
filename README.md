@@ -1,3 +1,3 @@
 # HashTags
 
-A description of this package.
+A Simple way to suport Tags in your Swift Aplications.

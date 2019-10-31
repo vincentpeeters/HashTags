@@ -23,7 +23,7 @@ public struct HashTag {
     
     //MARK: - Internal Methods and computed vars
     
-    func firstTagUp(from shorterTag: HashTag) -> HashTag? {
+    internal func firstTagUp(from shorterTag: HashTag) -> HashTag? {
         if let component = self.firstPathComponentUp(from: shorterTag) {
             return shorterTag.appending(component)
         } else {
