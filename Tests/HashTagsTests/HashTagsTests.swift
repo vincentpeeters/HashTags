@@ -49,11 +49,39 @@ final class HashTagsTests: XCTestCase {
         
     }
     
+    func testParenthashTagIsParentOfChild() {
+        let parent = HashTag("fggfd/fdsds/fdsfd")
+        let child = parent.appending("fgfd/trh/gfdgf")
+            
+        XCTAssertTrue(parent.isParentOf(child))
+        XCTAssertFalse(parent.isChildOf(child))
+        
+    }
+    
+    func testHashTagIsNotItsOwnParent() {
+        let parent = HashTag("fggfd/fdsds/fdsfd")
+        
+        XCTAssertFalse(parent.isParentOf(parent))
+        
+    }
+    
+    func testChildIsChildOfParent() {
+        let parent = HashTag("fggfd/fdsds/fdsfd")
+               let child = parent.appending("fgfd/trh/gfdgf")
+                   
+        XCTAssertTrue(child.isChildOf(parent))
+        XCTAssertFalse(child.isParentOf(parent))
+    }
+    
+    
     func testHashTagDictionary() {
         
     }
 
     static var allTests = [
         ("treeContainsAddedTags", treeContainsAddedTags),
+        ("treeContainsIntermediateTags", treeContainsIntermediateTags),
+        ("testHashTagDictionary", testHashTagDictionary),
+        ("testParenthashTagIsParentOfChild", testParenthashTagIsParentOfChild),
     ]
 }

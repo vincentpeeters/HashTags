@@ -24,6 +24,15 @@ public struct HashTag {
         components.last ?? ""
     }
     
+    public func isParentOf(_ potentialChild: HashTag) -> Bool {
+        guard potentialChild.components.count > self.components.count else { return false }
+        return self.components == Array(potentialChild.components.prefix(self.components.count))
+    }
+    
+    public func isChildOf(_ potentialParent: HashTag) -> Bool {
+        potentialParent.isParentOf(self)
+    }
+    
     
     //MARK: - Internal Methods and computed vars
     
