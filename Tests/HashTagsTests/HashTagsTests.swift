@@ -73,15 +73,25 @@ final class HashTagsTests: XCTestCase {
         XCTAssertFalse(child.isParentOf(parent))
     }
     
+    func testLastComponent() {
+        let tag1 = HashTag("test")
+        XCTAssertEqual(tag1.lastComponent, "test")
+        XCTAssertEqual(tag1.appending("sub").lastComponent, "sub")
+        XCTAssertEqual(HashTag("///%%bhjdshj&&&nfdjsknjd/dmdskf///dfnsk/jdjkds/last").lastComponent, "last")
+    }
     
-    func testHashTagDictionary() {
-        
+    
+    func testHashTagHasCorrectComponents() {
+        let tag = HashTag("///%%bhjdshj&&&nfdjsknjd/dmdskf///dfnsk/jdjkds/last")
+         XCTAssertEqual(tag.components, ["bhjdshjnfdjsknjd","dmdskf","dfnsk","jdjkds","last"])
     }
 
-    static var allTests = [
-        ("treeContainsAddedTags", treeContainsAddedTags),
-        ("treeContainsIntermediateTags", treeContainsIntermediateTags),
-        ("testHashTagDictionary", testHashTagDictionary),
-        ("testParenthashTagIsParentOfChild", testParenthashTagIsParentOfChild),
-    ]
+//    static var allTests = [
+//        ("treeContainsAddedTags", treeContainsAddedTags),
+//        ("treeContainsIntermediateTags", treeContainsIntermediateTags),
+//        ("testHashTagDictionary", testHashTagDictionary),
+//        ("testParenthashTagIsParentOfChild", testParenthashTagIsParentOfChild),
+//        ("testLastComponent", testLastComponent),
+//    ]
+    
 }
