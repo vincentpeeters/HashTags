@@ -9,9 +9,9 @@ import Foundation
 
 public extension HashTag {
     
-    class Tree {
+    struct Tree {
         
-        public let root: Node = Node(hashTag: .empty)
+        public var root: Node = Node(hashTag: .empty)
         
         public init(from hashTags: Set<HashTag> ) {
             for hashTag in hashTags {
@@ -25,7 +25,7 @@ public extension HashTag {
 
 public extension HashTag.Tree {
     
-    class Node {
+    struct Node {
         
         init(hashTag: HashTag) {
             self.hashTag = hashTag
@@ -35,21 +35,37 @@ public extension HashTag.Tree {
         
         public private(set) var children: Set<Node> = []
         
-        fileprivate func insert(_ hashTag: HashTag) {
+        fileprivate mutating func insert(_ hashTag: HashTag) {
             if let firstUp = hashTag.firstTagUp(from: self.hashTag) {
-                self.child(with: firstUp).insert(hashTag)
+                if !children.contains { $0.hashTag == firstUp } {
+                    children.insert(Node(hashTag: firstUp))
+                }
+//                var child = children.first { $0.hashTag == firstUp }
+//                child?.insert(hashTag)
+                
+                if var child = children.first(where:  { $0.hashTag == firstUp }) {
+                    children.remove(child)
+                    child.insert(hashTag)
+                    children.insert(child)
+                }
+                
+                
+//                self.child(with: firstUp).insert(hashTag)
             }
         }
         
-        private func child(with hashTag: HashTag) -> Node {
-            if let node = children.first(where: { $0.hashTag == hashTag }) {
-                return node
-            } else {
-                let node = Node(hashTag: hashTag)
-                children.insert(node)
-                return node
-            }
-        }
+//        private mutating func child(with hashTag: HashTag) -> Node {
+//
+//            children.first { $0.hashTag == hashTag }.
+//
+//            if let node = children.first(where: { $0.hashTag == hashTag }) {
+//                return node
+//            } else {
+//                let node = Node(hashTag: hashTag)
+//                children.insert(node)
+//                return node
+//            }
+//        }
         
     }
     
