@@ -76,11 +76,17 @@ public extension HashTag.Tree {
 extension HashTag.Tree.Node: Hashable {
     
     public static func == (lhs: HashTag.Tree.Node, rhs: HashTag.Tree.Node) -> Bool {
-        lhs.hashTag == rhs.hashTag
+        
+        guard lhs.hashTag == rhs.hashTag else { return false }
+        return lhs.children == rhs.children
+        
     }
     
     public func hash(into hasher: inout Hasher) {
         hasher.combine(self.hashTag.path)
+        for child in children {
+            hasher.combine(child)
+        }
     }
 
 }
