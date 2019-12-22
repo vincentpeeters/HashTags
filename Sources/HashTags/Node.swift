@@ -7,23 +7,9 @@
 
 import Foundation
 
-public extension HashTag {
-    
-    struct Tree {
-        
-        public var root: Node = Node(hashTag: .empty)
-        
-        public init(from hashTags: Set<HashTag> ) {
-            for hashTag in hashTags {
-                root.insert(hashTag)
-            }
-        }
-        
-    }
-    
-}
 
-public extension HashTag.Tree {
+
+public extension HashTag {
     
     struct Node {
         
@@ -31,41 +17,44 @@ public extension HashTag.Tree {
             self.hashTag = hashTag
         }
         
+        init(from hashtags: Set<HashTag>) {
+            self.hashTag = .empty
+            for tag in hashtags { self.insert(tag) }
+        }
+        
         public private(set) var hashTag: HashTag
         
         public private(set) var children: Set<Node> = []
         
-        fileprivate mutating func insert(_ hashTag: HashTag) {
+        public var offspring: Set<Node> {
+            let children = self.children.flatMap { Array($0.offspring) }
+            return Set(children + [self])
+        }
+        
+        public mutating func insert(_ hashTag: HashTag) {
             if let firstUp = hashTag.firstTagUp(from: self.hashTag) {
                 if !children.contains { $0.hashTag == firstUp } {
                     children.insert(Node(hashTag: firstUp))
                 }
-//                var child = children.first { $0.hashTag == firstUp }
-//                child?.insert(hashTag)
                 
                 if var child = children.first(where:  { $0.hashTag == firstUp }) {
                     children.remove(child)
                     child.insert(hashTag)
                     children.insert(child)
                 }
-                
-                
-//                self.child(with: firstUp).insert(hashTag)
             }
         }
         
-//        private mutating func child(with hashTag: HashTag) -> Node {
-//
-//            children.first { $0.hashTag == hashTag }.
-//
-//            if let node = children.first(where: { $0.hashTag == hashTag }) {
-//                return node
-//            } else {
-//                let node = Node(hashTag: hashTag)
-//                children.insert(node)
-//                return node
-//            }
-//        }
+        /// Removes the exact hashtag and any of its children from the tree, but leaves all parent hashtags
+        public mutating func remove(_ hashTag: HashTag) {
+            if let child = children.first(where: { $0.hashTag == hashTag }) {
+                children.remove(child)
+            } else if var child = children.first(where: { $0.hashTag.isParentOf(hashTag) }) {
+                children.remove(child)
+                child.remove(hashTag)
+                children.insert(child)
+            }
+        }
         
     }
     
@@ -73,9 +62,9 @@ public extension HashTag.Tree {
     
 }
 
-extension HashTag.Tree.Node: Hashable {
+extension HashTag.Node: Hashable {
     
-    public static func == (lhs: HashTag.Tree.Node, rhs: HashTag.Tree.Node) -> Bool {
+    public static func == (lhs: HashTag.Node, rhs: HashTag.Node) -> Bool {
         
         guard lhs.hashTag == rhs.hashTag else { return false }
         return lhs.children == rhs.children

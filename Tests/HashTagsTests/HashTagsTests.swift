@@ -3,10 +3,8 @@ import XCTest
 
 final class HashTagsTests: XCTestCase {
     
-    func treeContainsAddedTags() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct
-        // results.
+    func testTreeContainsAddedTags() {
+        
         let locations = HashTag("locations")
         let indoor = locations.appending("indoor")
         let outdoor = locations.appending("outdoor")
@@ -18,18 +16,16 @@ final class HashTagsTests: XCTestCase {
         
         let set = Set(arrayLiteral: locations, indoor, outdoor, dancing, activities, swift)
         
-        let tree = HashTag.Tree(from: set)
+        let tree = HashTag.Node(from: set)
         
         
         
-        XCTAssertTrue(tree.root.children.contains { $0.hashTag == HashTag("//locations///") })
+        XCTAssertTrue(tree.children.contains { $0.hashTag == HashTag("//locations///") })
         
     }
     
-    func treeContainsIntermediateTags() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct
-        // results.
+    func testTreeContainsIntermediateTags() {
+
         let locations = HashTag("locations")
         let indoor = locations.appending("indoor")
         let outdoor = locations.appending("outdoor")
@@ -39,14 +35,32 @@ final class HashTagsTests: XCTestCase {
         
         let swift = HashTag("Programming/languages/swift")
         
-        let set = Set(arrayLiteral: locations, indoor, outdoor, dancing, activities, swift)
+        let set = Set([locations, indoor, outdoor, dancing, activities, swift])
         
-        let tree = HashTag.Tree(from: set)
+        let tree = HashTag.Node(from: set)
         
         
+        XCTAssertTrue(tree.offspring.contains { $0.hashTag == HashTag("Programming/languages") })
         
-        XCTAssertTrue(tree.root.children.contains { $0.hashTag == HashTag("Programming/languages") })
+    }
+    
+    func testRemovingHastagInTreeRemovesHashtag() {
+        let locations = HashTag("locations")
+        let indoor = locations.appending("indoor")
+        let outdoor = locations.appending("outdoor")
         
+        let activities = HashTag("activities")
+        let dancing = activities.appending("dancing")
+        
+        let swift = HashTag("Programming/languages/swift")
+        
+        let set = Set([locations, indoor, outdoor, dancing, activities, swift])
+        
+        var tree = HashTag.Node(from: set)
+        
+        tree.remove(swift)
+        
+         XCTAssertFalse(tree.offspring.contains { $0.hashTag == swift })
     }
     
     func testParenthashTagIsParentOfChild() {
