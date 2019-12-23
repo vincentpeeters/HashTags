@@ -17,7 +17,7 @@ public extension HashTag {
             self.hashTag = hashTag
         }
         
-        init(from hashtags: Set<HashTag>) {
+        public init(from hashtags: Set<HashTag>) {
             self.hashTag = .empty
             for tag in hashtags { self.insert(tag) }
         }
