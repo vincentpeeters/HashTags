@@ -99,6 +99,23 @@ final class HashTagsTests: XCTestCase {
         let tag = HashTag("///%%bhjdshj&&&nfdjsknjd/dmdskf///dfnsk/jdjkds/last")
          XCTAssertEqual(tag.components, ["bhjdshjnfdjsknjd","dmdskf","dfnsk","jdjkds","last"])
     }
+    
+    
+//    func testDictionary() {
+//        
+//        let locations = HashTag("locations")
+//               let indoor = locations.appending("indoor")
+//               let outdoor = locations.appending("outdoor")
+//               
+//               let activities = HashTag("activities")
+//               let dancing = activities.appending("dancing")
+//               
+//               let swift = HashTag("Programming/languages/swift")
+//               
+//               let set = Set([locations, indoor, outdoor, dancing, activities, swift])
+//        
+//        
+//    }
 
 //    static var allTests = [
 //        ("treeContainsAddedTags", treeContainsAddedTags),
