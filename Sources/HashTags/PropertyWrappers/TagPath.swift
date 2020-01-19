@@ -17,14 +17,11 @@ import Foundation
         get { string }
         set(newString) {
             let sanatized = String(newString
-                .filter { $0.isLetter || $0.isEmoji || $0.isWhitespace || $0.isNumber || $0.isSymbol || $0.isCurrencySymbol }
+                .filter { $0 == "/" || $0.isLetter || $0.isEmoji || $0.isWhitespace || $0.isNumber || $0.isSymbol || $0.isCurrencySymbol || $0.isPunctuation }
                 .filter { $0 != "#" }
-                .filter { $0 != "/" }
-                .lowercased()
             )
             let components = sanatized.split(separator: "/")
             self.string = components.joined(separator: "/")
-            
         }
     }
     

@@ -96,8 +96,13 @@ final class HashTagsTests: XCTestCase {
     
     
     func testHashTagHasCorrectComponents() {
-        let tag = HashTag("///%%bhjdshj&&&nfdjsknjd/dmdskf///dfnsk/jdjkds/last")
-         XCTAssertEqual(tag.components, ["bhjdshjnfdjsknjd","dmdskf","dfnsk","jdjkds","last"])
+        let tag = HashTag("///%%bhjdshj&&&nfdjskn#jd/dmdskf///dfnsk/jdjkds/last")
+         XCTAssertEqual(tag.components, ["%%bhjdshj&&&nfdjsknjd","dmdskf","dfnsk","jdjkds","last"])
+    }
+    
+    func testHashtagsContainsEmojiAndWiteSpaces() {
+        let tag = HashTag("Tony Baxter 🌶/🍆💦⽔")
+        XCTAssertEqual(tag.components, ["Tony Baxter 🌶","🍆💦⽔"])
     }
     
     
