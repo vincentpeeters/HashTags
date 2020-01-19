@@ -12,14 +12,14 @@ import Foundation
     public init(){}
     
     private var string = ""
-    
-    private let allowedCharacters = "abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLKMNOPQRSTUVWXYZ1234567890/"
-    
+        
     public var wrappedValue: String {
         get { string }
         set(newString) {
             let sanatized = String(newString
-                .filter { allowedCharacters.contains($0) }
+                .filter { $0.isLetter || $0.isEmoji || $0.isWhitespace || $0.isNumber || $0.isSymbol || $0.isCurrencySymbol }
+                .filter { $0 != "#" }
+                .filter { $0 != "/" }
                 .lowercased()
             )
             let components = sanatized.split(separator: "/")
@@ -29,3 +29,5 @@ import Foundation
     }
     
 }
+
+
